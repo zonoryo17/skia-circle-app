@@ -8,17 +8,17 @@ import {
 } from 'react-native-reanimated';
 
 type Props = {
-  position: { x: number; y: number };
+  x: number;
+  y: number;
   animationSize: number;
   duration: number;
-  isReverse?: boolean;
 };
 
 export const useFloatingCircleItem = ({
-  position,
+  x,
+  y,
   animationSize,
   duration,
-  isReverse,
 }: Props) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -28,25 +28,24 @@ export const useFloatingCircleItem = ({
       withRepeat(
         withTiming(animationSize, {
           duration,
-          easing: isReverse
-            ? Easing.out(Easing.inOut(Easing.ease))
-            : Easing.inOut(Easing.ease),
+          easing: Easing.inOut(Easing.ease),
         }),
         -1,
         true
       ),
-    [animationSize, duration, isReverse]
+    [animationSize, duration]
   );
 
   useEffect(() => {
     // X軸のアニメーション
     translateX.value = memoizedWithRepeat();
+
     // Y軸のアニメーション
     translateY.value = memoizedWithRepeat();
   });
 
-  const cx = useDerivedValue(() => translateX.value + position.x);
-  const cy = useDerivedValue(() => translateY.value + position.y);
+  const cx = useDerivedValue(() => translateX.value + x);
+  const cy = useDerivedValue(() => translateY.value + y);
 
   return { cx, cy };
 };

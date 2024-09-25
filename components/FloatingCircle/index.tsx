@@ -1,21 +1,10 @@
 import { Canvas } from '@shopify/react-native-skia';
-import { type FC, memo } from 'react';
-import { FloatingCircleItem } from '../FloatingCircleItem';
-
-type CircleItem = {
-  id: number;
-  position: { x: number; y: number };
-  r: number;
-  color: string;
-  duration: number;
-  animationSize: number;
-};
 
 type Props = {
-  circleItems: Readonly<CircleItem[]>;
+  children: React.ReactElement | React.ReactElement[];
 };
 
-export const FloatingCircle: FC<Props> = memo(({ circleItems }) => {
+export const FloatingCircle: React.FC<Props> = ({ children }) => {
   return (
     <Canvas
       style={{
@@ -23,18 +12,7 @@ export const FloatingCircle: FC<Props> = memo(({ circleItems }) => {
         backgroundColor: 'blue',
       }}
     >
-      {circleItems.map(
-        ({ id, position, r, color, animationSize, duration }) => (
-          <FloatingCircleItem
-            key={id}
-            position={position}
-            r={r}
-            color={color}
-            animationSize={animationSize}
-            duration={duration}
-          />
-        )
-      )}
+      {children}
     </Canvas>
   );
-});
+};

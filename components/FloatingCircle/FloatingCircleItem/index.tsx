@@ -2,7 +2,8 @@ import { Circle } from '@shopify/react-native-skia';
 import { useFloatingCircleItem } from './useFloatingCircleItem';
 
 type Props = {
-  position: { x: number; y: number };
+  x: number;
+  y: number;
   r: number;
   color: string;
   animationSize: number;
@@ -10,14 +11,16 @@ type Props = {
 };
 
 export const FloatingCircleItem: React.FC<Props> = ({
-  position,
+  x,
+  y,
   r,
   color,
   animationSize,
   duration,
 }) => {
   const { cx, cy } = useFloatingCircleItem({
-    position,
+    x,
+    y,
     animationSize,
     duration,
   });

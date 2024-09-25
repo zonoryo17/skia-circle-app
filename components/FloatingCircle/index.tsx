@@ -1,51 +1,40 @@
-import { Canvas, Circle } from '@shopify/react-native-skia';
-import React, { useEffect } from 'react';
-import {
-  Easing,
-  useSharedValue,
-  withRepeat,
-  withTiming,
-} from 'react-native-reanimated';
+import { Canvas } from '@shopify/react-native-skia';
+import { type FC, memo } from 'react';
+import { FloatingCircleItem } from '../FloatingCircleItem';
 
-export const FloatingCircle = () => {
-  const r = 150;
-  const canvasSize = r * 2;
-  const x = r;
-  const y = r;
+type CircleItem = {
+  id: number;
+  position: { x: number; y: number };
+  r: number;
+  color: string;
+  duration: number;
+  animationSize: number;
+};
 
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
+type Props = {
+  circleItems: Readonly<CircleItem[]>;
+};
 
-  useEffect(() => {
-    // X軸のアニメーション
-    translateX.value = withRepeat(
-      withTiming(20, {
-        duration: 2000,
-        easing: Easing.inOut(Easing.ease),
-      }),
-      -1,
-      true
-    );
-
-    // Y軸のアニメーション
-    translateY.value = withRepeat(
-      withTiming(20, {
-        duration: 2000,
-        easing: Easing.inOut(Easing.ease),
-      }),
-      -1,
-      true
-    );
-  }, [translateX, translateY]);
+export const FloatingCircle: FC<Props> = memo(({ circleItems }) => {
   return (
     <Canvas
       style={{
-        width: canvasSize,
-        height: canvasSize,
+        flex: 1,
         backgroundColor: 'blue',
       }}
     >
-      <Circle cx={x} cy={y} r={r} color="yellow" />
+      {circleItems.map(
+        ({ id, position, r, color, animationSize, duration }) => (
+          <FloatingCircleItem
+            key={id}
+            position={position}
+            r={r}
+            color={color}
+            animationSize={animationSize}
+            duration={duration}
+          />
+        )
+      )}
     </Canvas>
   );
-};
+});

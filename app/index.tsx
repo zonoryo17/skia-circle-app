@@ -42,17 +42,19 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <Text>Floating Circle App</Text>
       <FloatingCircle>
-        {FLOATING_CIRCLE_ITEMS.map((item) => (
-          <FloatingCircleItem
-            key={item.x + item.y}
-            x={item.x}
-            y={item.y}
-            r={item.r}
-            color={item.color}
-            duration={item.duration}
-            animationSize={item.animationSize}
-          />
-        ))}
+        {FLOATING_CIRCLE_ITEMS.map(
+          ({ x, y, r, color, animationSize, duration }) => (
+            <FloatingCircleItem
+              key={x + y}
+              x={x}
+              y={y}
+              r={r}
+              color={color}
+              duration={duration}
+              animationSize={animationSize}
+            />
+          )
+        )}
       </FloatingCircle>
     </SafeAreaView>
   );

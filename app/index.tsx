@@ -1,5 +1,4 @@
 import { FloatingCircle } from '@/components/FloatingCircle';
-import { FloatingCircleItem } from '@/components/FloatingCircle/FloatingCircleItem';
 import { SafeAreaView, Text } from 'react-native';
 
 const FLOATING_CIRCLE_ITEMS = [
@@ -35,27 +34,13 @@ const FLOATING_CIRCLE_ITEMS = [
     duration: 3500,
     animationSize: 40,
   },
-] as const;
+] as const satisfies React.ComponentProps<typeof FloatingCircle>['items'];
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Text>Floating Circle App</Text>
-      <FloatingCircle>
-        {FLOATING_CIRCLE_ITEMS.map(
-          ({ x, y, r, color, animationSize, duration }) => (
-            <FloatingCircleItem
-              key={x + y}
-              x={x}
-              y={y}
-              r={r}
-              color={color}
-              duration={duration}
-              animationSize={animationSize}
-            />
-          )
-        )}
-      </FloatingCircle>
+      <FloatingCircle items={FLOATING_CIRCLE_ITEMS} />
     </SafeAreaView>
   );
 }
